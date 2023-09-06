@@ -5,8 +5,8 @@ import enums.DaysOfWeek;
 import java.util.*;
 
 public class PersonRepository {
-    private List<Person> personList;
-    private Map<Integer, Person> personMap;
+    public List<Person> personList;
+    public Map<Integer, Person> personMap;
 
     public PersonRepository() {
         personList = new ArrayList<>();

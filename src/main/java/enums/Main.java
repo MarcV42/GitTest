@@ -23,7 +23,27 @@ public class Main {
         }
 
         System.out.println(a1.getWochentag().getGerman());
+
+       PersonRepository personRepo = new PersonRepository();
+        System.out.println(personRepo.personList.size());
+
+        Optional<Person> test = personRepo.findPersonById(2);
+        System.out.println(test.get());
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
 
 
     public static void printPersonById(PersonRepository repository, int id) {

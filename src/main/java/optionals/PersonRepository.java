@@ -1,31 +1,48 @@
 package optionals;
+
 import enums.DaysOfWeek;
 
 import java.util.*;
 
 public class PersonRepository {
-    private Map<Integer, Person> persons;
+    private List<Person> personList;
+    private Map<Integer, Person> personMap;
 
     public PersonRepository() {
-        persons = new HashMap<>();
+        personList = new ArrayList<>();
+        personMap = new HashMap<>();
         // Füge 10 Personen mit vordefinierten Werten hinzu
-        persons.put(1, new Person(1, "Alice", DaysOfWeek.MONDAY));
-        persons.put(2, new Person(2, "Bob", DaysOfWeek.TUESDAY));
-        persons.put(3, new Person(3, "Charlie", DaysOfWeek.WEDNESDAY));
-        persons.put(4, new Person(4, "David", DaysOfWeek.THURSDAY));
-        persons.put(5, new Person(5, "Eva", DaysOfWeek.FRIDAY));
-        persons.put(6, new Person(6, "Frank", DaysOfWeek.SATURDAY));
-        persons.put(7, new Person(7, "Grace", DaysOfWeek.SUNDAY));
-        persons.put(8, new Person(8, "Hank", DaysOfWeek.MONDAY));
-        persons.put(9, new Person(9, "Ivy", DaysOfWeek.TUESDAY));
-        persons.put(10, new Person(10, "Jack", DaysOfWeek.WEDNESDAY));
+        personList.add(new Person(1, "Alice", DaysOfWeek.MONDAY));
+        personList.add(new Person(2, "Bob", DaysOfWeek.TUESDAY));
+        personList.add(new Person(3, "Charlie", DaysOfWeek.WEDNESDAY));
+        personList.add(new Person(4, "David", DaysOfWeek.THURSDAY));
+        personList.add(new Person(5, "Eva", DaysOfWeek.FRIDAY));
+        personList.add(new Person(6, "Frank", DaysOfWeek.SATURDAY));
+        personList.add(new Person(7, "Grace", DaysOfWeek.SUNDAY));
+        personList.add(new Person(8, "Hank", DaysOfWeek.MONDAY));
+        personList.add(new Person(9, "Ivy", DaysOfWeek.TUESDAY));
+        personList.add(new Person(10, "Jack", DaysOfWeek.WEDNESDAY));
+
+        // Fülle die Map mit Personen
+        for (Person person : personList) {
+            personMap.put(person.id(), person);
+        }
     }
 
     public Optional<Person> findPersonById(int id) {
-        return Optional.ofNullable(persons.get(id));
+        // Zuerst in der Liste nach der Person suchen
+        Optional<Person> personFromList = personList.stream()
+                .filter(person -> person.id() == id)
+                .findFirst();
+
+        // Wenn in der Liste nicht gefunden, in der Map suchen
+        if (personFromList.isPresent()) {
+            return personFromList;
+        } else {
+            return Optional.ofNullable(personMap.get(id));
+        }
     }
 }
-
 
 /*
 Schritt 1: Erstelle ein Enum DaysOfWeek mit den Wochentagen (Montag bis Sonntag).
